@@ -14,6 +14,11 @@ Code to train a self-supervised segmentation network for segmentation of nuclei 
 * ```--gpu``` specifies which GPU to use. A value of ```-1``` implies no GPU.
 * ```--output_dir``` specifies directory to record results. If the configuration file is ```name.yaml```, results will be recorded in ```output/name```. 
 
+
+## Config files
+See [configuration options](configs/README.md) for a description of configuration options
+
+
 ## Models
 <Will be added soon>
 
