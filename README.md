@@ -20,7 +20,7 @@ See [configuration options](configs/README.md) for a description of configuratio
 
 
 ## Models
-<Will be added soon>
+(Will be added soon)
 
 ## Reference
 *Self-Supervised Nuclei Segmentation in Histopathological Images Using Attention*, Mihir Sahasrabudhe, Stergios Christodoulidis, Roberto Salgado, Stefan Michiels, Sherene Loi, Fabrice Andre, Nikos Paragios, Maria Vakalopoulou, MICCAI 2020
