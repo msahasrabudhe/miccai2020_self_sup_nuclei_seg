@@ -37,13 +37,6 @@ def run(n_imgs=None):
             print('%s does not exist. Proceeding with extraction.' %(savepath))
 
 
-#        if os.path.exists(os.path.join(savepath, 'slide_files/10/0_0.png')):
-#            print('Skipping %s.' %(savepath))
-#            continue
-#        else:
-#            print('0_0.png not found in %s.' %(os.path.join(savepath, 'slide_files/10/')))
-#            continue
-
         ret     = tp.slide2tiles(s_name, OUT_ROOT, SLIDE_SIZE, savepath)
     
         write_flush('Finished extracting tiles for %3d/%3d patients.' %(_id, n_imgs))
