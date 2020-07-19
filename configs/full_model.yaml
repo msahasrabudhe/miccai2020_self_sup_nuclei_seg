@@ -14,7 +14,7 @@ lr                          : 0.0002
 momentum                    : 0.9
 weight_decay                : 0.0001
 n_epochs                    : 10000
-losses                      : ['scale', 'smooth_att', 'equiv_aug_mse']
+losses                      : ['scale', 'smooth_att', 'equiv_aug_mse', 'equiv_scale_mse']
 predictions                 : ['scale']
 checkpoint_special          : 1
 lr_decay                    : 0.1
@@ -22,7 +22,7 @@ lr_decay_every              : [300, 600]
 
 scale_scale                 : 1.0
 
-equivariance_scale          : False
+equivariance_scale          : True
 equivariance_aug            : ['FX', 'FY', 'TR', 'R90', 'R180', 'R270']
 optimiser                   : adam
 
@@ -36,6 +36,7 @@ max_train_batches_per_epoch : 100
 max_val_batches_per_epoch   : 5
 use_colour_transform        : True
 use_image_transforms        : True
+use_global_transform        : False
 
 
 # DATASET OPTIONS

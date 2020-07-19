@@ -36,6 +36,7 @@ max_train_batches_per_epoch : 100
 max_val_batches_per_epoch   : 5
 use_colour_transform        : True
 use_image_transforms        : True
+use_global_transform        : False
 
 
 # DATASET OPTIONS

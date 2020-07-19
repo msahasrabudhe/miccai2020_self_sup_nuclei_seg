@@ -46,6 +46,7 @@
 * ```seg_threshold``` : Threshold to reject input tiles. This value in ```[0, 1]``` specifies at least what fraction of an input image must be tissue in order for it to be used
 * ```levels``` : Magnification levels to use for training. ```OpenSlide```'s convention is followed, so ```'max'``` denotes the maximum magnification, while ```'-1'``` and ```'-2'``` denote one and two lower levels of magnification, respectively. 
 * ```splits_file``` : Splits file specifying train/val/test split in ```dataroot```.
+* ```seg_cover_file```: File in ```dataroot``` specifying fraction of tissue cover for extracted images. This file for MoNuSeg images extracted with the provided code is included in ```data_processing```. 
 
 ### Initialisation options
 
