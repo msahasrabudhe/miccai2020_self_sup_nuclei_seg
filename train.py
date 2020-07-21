@@ -720,6 +720,9 @@ def main(sys_string=None):
 
             torch.save(model_dict, os.path.join(output_dir, '%d'%(epoch), 'net.pth'))
             torch.save(optimiser.state_dict(), os.path.join(output_dir, '%d'%(epoch), 'optimiser.pth'))
+            with open(os.path.join(output_dir, '%d' %(epoch), 'system_state.pkl'), 'wb') as fp:
+                pickle.dump(system_state, fp)
+
             write_okay()
 
         # Saving images. 
