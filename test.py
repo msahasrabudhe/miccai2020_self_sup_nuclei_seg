@@ -71,8 +71,11 @@ def test_fn(sys_string=None):
 
     # Making output directory
     test_output_dir         = os.path.join(output_dir, 'test_output/')
-    if not os.path.exists(test_output_dir):
-        os.makedirs(test_output_dir)
+    post_output_dir         = os.path.join(test_output_dir, 'post/')
+    mask_output_dir         = os.path.join(test_output_dir, 'masks/')
+    for path_ in [test_output_dir, post_output_dir, mask_output_dir]:
+        if not os.path.exists(path_):
+            os.makedirs(path_)
 
     align_left('Initialising %s ...' %(options.model_arch))
     model                   = eval(options.model_arch)(options).to(device)
@@ -97,20 +100,20 @@ def test_fn(sys_string=None):
     write_okay()
 
     align_left('Defining list of transforms ...')
-    transforms              = ['ID']
+    transforms_to_use       = ['ID']
     if options.equivariance_scale:
-        transforms.append('D2')
+        transforms_to_use.append('D2')
     if options.equivariance_aug:
-        transforms += options.equivariance_aug 
+        transforms_to_use  += options.equivariance_aug 
     write_okay()
 
-    for batch_idx, data_point in tqdm.tqdm(enumerate(loader, 0), ascii=True, ncols=100, desc='Computing attentions'):
+    for batch_idx, data_point in tqdm.tqdm(enumerate(dataloader, 0), ncols=100, desc='Computing attentions'):
         imgs                = data_point[0].to(device)
         files               = data_point[1] if batch_idx == 0 else files + data_point[1]
      
         att                 = None
         feats               = None
-        for tr in TRANSFORMS_TO_USE:
+        for tr in transforms_to_use:
             forward_fn      = AUG_TRANSFORMS_DICT[tr]['forward']
             backward_fn     = AUG_TRANSFORMS_DICT[tr]['backward']
             with torch.no_grad():
@@ -121,6 +124,10 @@ def test_fn(sys_string=None):
         
         ims                 = imgs if batch_idx == 0 else torch.cat([ims, imgs], dim=0)
         segs                = att if batch_idx == 0 else torch.cat([segs, att], dim=0)
+
+    # Place on the host
+    ims                     = ims.detach().cpu().numpy()
+    segs                    = segs.detach().cpu().numpy()
 
     # Post processing. 
     align_left('Post processing ...')
@@ -133,11 +140,19 @@ def test_fn(sys_string=None):
 
 
     align_left('Writing result ...')
-    for f in files:
-        out_file_name       = os.path.join(test_output_dir, f+'.tif')
+    for i in range(len(files)):
+        f                   = files[i]
+        # Save post-processed output
+        out_file_name       = os.path.join(post_output_dir, f+'.tif')
         seg                 = posts[i]
+        # Save mask. 
+        imageio.imsave(out_file_name, seg)
+        out_file_name       = os.path.join(mask_output_dir, f+'.png')
+        seg                 = 255 * np.uint8(posts[i] > 0)
         imageio.imsave(out_file_name, seg)
     write_okay() 
+
+    print('Results written to %s' %(test_output_dir))
 
     print('[ DONE ]')     
 
