@@ -16,7 +16,7 @@ from    tensorboardX    import  SummaryWriter
 
 
 
-def main(sys_string=None):
+def train_fn(sys_string=None):
     """
     Main function. 
     Defines all training, and validation code. 
@@ -746,4 +746,4 @@ def main(sys_string=None):
     return
 
 if __name__ == '__main__':
-    main()
+    train_fn()

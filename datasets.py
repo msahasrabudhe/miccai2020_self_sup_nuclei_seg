@@ -726,3 +726,52 @@ class MoNuSegScaleEqualSampler(torch.utils.data.Sampler):
         return self.n_indices
 
 #   ====================================================================================================
+
+class TestDataset(torch.utils.data.Dataset):
+    def __init__(self, options, ext='.tif', dataroot=None, filenames=None):
+        super(TestDataset, self).__init__()
+        
+        self.options            = options
+        self.dataroot           = dataroot
+        self.im_root            = self.dataroot
+
+        if not ext.startswith('.'):
+            ext                 = '.' + ext
+
+        self.ext                = ext
+
+        if not filenames:
+            self.files          = [p.replace(self.ext,'') for p in os.listdir(self.im_root)]
+        else:
+            self.files          = filenames
+
+        self.stds               = options.pixel_stds
+        self.means              = options.pixel_means
+        
+        if options.stain_normaliser_file:
+            target              = imageio.imread(os.path.join(options.dataroot, options.stain_normaliser_file))
+            self.stain_normaliser = StainNormalizerLAB()
+            self.stain_normaliser.fit(target)
+        else:
+            self.stain_normaliser = False
+        
+    def __getitem__(self, index):
+        img                     = pil_loader(os.path.join(self.im_root, self.files[index] + self.ext))
+        
+        img                     = np.array(img)
+        if self.stain_normaliser:
+            img                 = self.stain_normaliser(img)
+        
+        if self.options.hed_decomp:
+            img                 = skcolor.rgb2hed(img / 255.0).astype(np.float32)
+            img                 = img[:,:,self.options.hed_channels]
+            
+        img                     = vtransforms.Compose(
+                                    [vtransforms.ToTensor(), 
+                                     vtransforms.Normalize(self.means, self.stds)]
+                                  )(img)
+        
+        return img, self.files[index]
+    
+    def __len__(self):
+        return len(self.files)
