@@ -237,10 +237,5 @@ def manifest_substract_manifest(m1, m2):
 
 
 if __name__ == '__main__':
-    # source_folder = '/home/marvinlerousseau/Documents/thesis/data/minimalist2/'
-    # remove_lines_manifest(source_folder)
-
-    m1 = '/home/marvinlerousseau/Documents/thesis/data/minimalist3/gdc_manifest_20181011_073015.txt'
-    m2 = '/home/marvinlerousseau/Documents/thesis/data/minimalist3/minimalist2_gdc_manifest_20181011_073015.txt'
     manifest_substract_manifest(m1, m2)
 
