@@ -19,8 +19,5 @@ Code to train a self-supervised segmentation network for segmentation of nuclei 
 See [configuration options](configs/README.md) for a description of configuration options
 
 
-## Models
-(Will be added soon)
-
 ## Reference
 *Self-Supervised Nuclei Segmentation in Histopathological Images Using Attention*, Mihir Sahasrabudhe, Stergios Christodoulidis, Roberto Salgado, Stefan Michiels, Sherene Loi, Fabrice Andre, Nikos Paragios, Maria Vakalopoulou, MICCAI 2020 [ [PDF](https://arxiv.org/pdf/2007.08373.pdf) ]
