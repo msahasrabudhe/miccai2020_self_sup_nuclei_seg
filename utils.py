@@ -182,6 +182,56 @@ def soft_dice_loss(y_pred, y_true):
     return 1 - ((2. * intersection + smooth) /
                           (iflat.sum() + tflat.sum() + smooth))
 
+# ===============================================================================================================================
+def stitch_images(img_dict, lib='th', ch=None, overlap=0):
+    """
+    img_dict contains images, their locations specified as col_row
+    """
+
+    locations           = list(img_dict.keys())
+   
+
+    min_rows            = min([int(l.split('_')[1]) for l in locations])
+    min_cols            = min([int(l.split('_')[0]) for l in locations])
+    max_rows            = max([int(l.split('_')[1]) for l in locations])
+    max_cols            = max([int(l.split('_')[0]) for l in locations])
+
+    ov                  = overlap // 2
+
+    if lib == 'th':
+        img_size        = img_dict[locations[0]].shape[-1]
+        n_ch            = img_dict[locations[0]].size(-3) if ch is None else 1
+        zero_img        = torch.zeros(n_ch, img_size - 2*ov, img_size - 2*ov)
+        cat_func        = lambda L, d: torch.cat(L, dim=d)
+        if ov > 0:
+            patch_func  = lambda img: img[:, ov:-ov, ov:-ov]
+        else:
+            patch_func  = lambda img: img
+    elif lib == 'np':
+        img_size        = img_dict[locations[0]].shape[0]
+        n_ch            = img_dict[locations[0]].shape[-1] if ch is None else 1
+        zero_img        = np.zeros((img_size - 2*ov, img_size - 2*ov, n_ch), dtype=img_dict[locations[0]].dtype)
+        cat_func        = lambda L, d: np.concatenate(L, axis=d-1)
+        if ov > 0:
+            patch_func  = lambda img: img[ov:-ov, ov:-ov, :]
+        else:
+            patch_func  = lambda img: img
+    
+    for r in range(min_rows, max_rows+1):
+        for c in range(min_cols, max_cols+1):
+            loc         = '%d_%d' %(c, r)
+            if loc in img_dict:
+                this_   = patch_func(img_dict[loc])
+            else:
+                this_   = zero_img
+
+            row_        = this_ if c == min_cols else cat_func([row_, this_], -1)
+
+        stitched_       = row_ if r == min_rows else cat_func([stitched_, row_], -2)
+
+    return stitched_
+
+
 # ===============================================================================
 #   Define geometric transformation losses. 
 #   Tensors here are defined as B x C x H x W
