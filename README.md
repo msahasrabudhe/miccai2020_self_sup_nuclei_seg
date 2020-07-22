@@ -8,11 +8,31 @@ Code to train a self-supervised segmentation network for segmentation of nuclei 
 * ```utils.py``` defines extra useful functions.
 * ```configs/``` defines ```.yaml``` configuration files to set experiment parameters. 
 
+## Installation
+The Anaconda environment is specified in ```conda_env.yml```. The environment can be recreated using
+
+```
+conda env create -f conda_env.yml
+```
+
+Tested with Nvidia GeForce GTX 1080 and GeForce GTX 1080 Ti GPUs, running driver version 410.48 and cuda 10.0, and Pytorch 1.1.0 with torchvision 0.3.0.
+
 ## Usage
 ```train.py``` is the training code which offers three command line parameters. 
 * ```--cfg``` specifies the configuration file to use.
 * ```--gpu``` specifies which GPU to use. A value of ```-1``` implies no GPU.
 * ```--output_dir``` specifies directory to record results. If the configuration file is ```name.yaml```, results will be recorded in ```output/name```. 
+
+Example train usage---
+
+```
+python train.py --cfg configs/example.yaml --gpu 0 --output_dir /path/to/output/
+```
+
+Example testing usage---
+```
+python test.py --cfg configs/example.yaml --epoch 200 --dataroot /path/to/test/imgs/ --ext tif --gpu 0 --output_dir /path/to/output/
+```
 
 
 ## Config files
