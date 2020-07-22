@@ -1,4 +1,4 @@
-# Self-supervised nuclei segmentation (MICCAI 2020)
+# Self-supervised nuclei segmentation
 
 Code to train a self-supervised segmentation network for segmentation of nuclei in histopathology images. 
 
