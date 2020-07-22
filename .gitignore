@@ -4,6 +4,7 @@
 output/
 logs/
 *.ipynb
+*.png 
 
 
 # Byte-compiled / optimized / DLL files
