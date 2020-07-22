@@ -107,7 +107,9 @@ def test_fn(sys_string=None):
         transforms_to_use  += options.equivariance_aug 
     write_okay()
 
-    for batch_idx, data_point in tqdm.tqdm(enumerate(dataloader, 0), ncols=100, desc='Computing attentions'):
+    # We use the list transforms_to_use to compute attentions using several orientations of the image
+    #   and later fuse them together by averaging the attention from each orientation. 
+    for batch_idx, data_point in enumerate(tqdm.tqdm(dataloader, ncols=100, desc='Computing attentions'), 0):
         imgs                = data_point[0].to(device)
         files               = data_point[1] if batch_idx == 0 else files + data_point[1]
      
