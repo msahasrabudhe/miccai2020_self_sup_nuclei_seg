@@ -17,6 +17,9 @@ conda env create -f conda_env.yml
 
 Tested with Nvidia GeForce GTX 1080 and GeForce GTX 1080 Ti GPUs, running driver version 410.48 and cuda 10.0, and Pytorch 1.1.0 with torchvision 0.3.0.
 
+## Data
+Please see the directory [data processing](data_processing/README.md) for instructions on downloading and using data. 
+
 ## Usage
 ```train.py``` is the training code which offers three command line parameters. 
 * ```--cfg``` specifies the configuration file to use.
