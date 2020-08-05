@@ -1,6 +1,6 @@
 # Self-supervised nuclei segmentation
 
-Code to train a self-supervised segmentation network for segmentation of nuclei in histopathology images. 
+Code to train a self-supervised segmentation network for segmentation of nuclei in histopathology images [1]. 
 
 * ```train.py``` contains training code and defines command line options. 
 * ```datasets.py``` defines datasets used to read images. 
@@ -43,4 +43,4 @@ See [configuration options](configs/README.md) for a description of configuratio
 
 
 ## Reference
-*Self-Supervised Nuclei Segmentation in Histopathological Images Using Attention*, Mihir Sahasrabudhe, Stergios Christodoulidis, Roberto Salgado, Stefan Michiels, Sherene Loi, Fabrice Andre, Nikos Paragios, Maria Vakalopoulou, MICCAI 2020 [ [PDF](https://arxiv.org/pdf/2007.08373.pdf) ]
+*[1] Self-Supervised Nuclei Segmentation in Histopathological Images Using Attention*, Mihir Sahasrabudhe, Stergios Christodoulidis, Roberto Salgado, Stefan Michiels, Sherene Loi, Fabrice Andre, Nikos Paragios, Maria Vakalopoulou, MICCAI 2020 [ [PDF](https://arxiv.org/pdf/2007.08373.pdf) ]
