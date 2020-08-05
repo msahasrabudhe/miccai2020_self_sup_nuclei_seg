@@ -24,7 +24,7 @@ Please see the directory [data processing](data_processing/README.md) for instru
 ```train.py``` is the training code which offers three command line parameters. 
 * ```--cfg``` specifies the configuration file to use.
 * ```--gpu``` specifies which GPU to use. A value of ```-1``` implies no GPU.
-* ```--output_dir``` specifies directory to record results. If the configuration file is ```name.yaml```, results will be recorded in ```output/name```. 
+* ```--output_dir``` specifies directory to record results. If the configuration file is ```name.yaml```, results will be recorded in ```<output_dir>/name```. 
 
 Example train usage---
 
